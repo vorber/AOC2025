@@ -38,6 +38,6 @@ module Day1 =
         >> Seq.map (tuple >> cnt)
         >> Seq.sum
 
-    let solve: string seq -> int*int = 
-        Seq.map parseItem
-        >> both part1 part2
+
+    let solve: string seq -> string = 
+        Seq.map parseItem >> both part1 part2 >> output

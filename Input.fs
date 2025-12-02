@@ -25,7 +25,6 @@ module Input  =
 
     let readToken year = 
         let path =(directory year) + "/token"
-        printfn "%s" path
         (File.ReadAllText path).Trim()
             
 

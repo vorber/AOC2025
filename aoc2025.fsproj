@@ -9,9 +9,11 @@
     <Compile Include="Input.fs" />
     <Compile Include="Misc.fs" />
     <Compile Include="day1.fs" />
+    <Compile Include="day2.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FParsec" Version="1.1.1" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0" />
   </ItemGroup>
 </Project>

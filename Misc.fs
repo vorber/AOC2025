@@ -5,6 +5,7 @@ module Misc =
         printfn msg x
         x
     let output (p1,p2) = sprintf "(p1:%A, p2:%A)" p1 p2
+    let charToInt (c:char) = int c - int '0'
 
     let tuple (arr:'a array) = (arr[0], arr[1])
     let both f g x = (f x, g x)

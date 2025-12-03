@@ -14,7 +14,7 @@ module Day1 =
         "L99";
         "R14";
         "L82";
-        |] :> seq<string>
+        |]
 
     let parseItem (s:string)=
         match s[0] with

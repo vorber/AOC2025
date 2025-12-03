@@ -7,32 +7,25 @@ module Day2 =
 
     let parse = splitOn "-" >> tuple >> tmap int64
 
-    let isInvalid_p1 n = 
-        let s = string n
-        if s.Length % 2 <> 0 then false else
-            let len = s.Length / 2
-            s[0..len-1] = s[len..]
+    let isInvalid_p1 (s:string) = 
+        match s.Length with
+        | Odd _ -> false
+        | Even x -> s[0..x/2-1] = s[x/2..]
 
-    let isInvalid_p2 (n:int64) = 
-        let s = string n
+    let isInvalid_p2 (s:string) = 
         let checkConcreteLength len = 
-            Seq.toArray 
-            >> Array.chunkBySize len
-            >> Array.map System.String 
-            >> Array.forall (fun e -> e=s[0..len-1])
-        let checkAll = 
-            Seq.filter (fun len -> if s.Length % len <> 0 then false else checkConcreteLength len s)
-            >> Seq.isEmpty 
-            >> not
-        if s.Length < 2 then false else
-            Seq.init (s.Length/2) ((+) 1)
-            |> checkAll
+            match s.Length with
+            | DivisibleBy len _ -> Seq.toArray >> Array.chunkBySize len >> Array.map System.String >> Array.forall ((=) s[0..len-1])
+            | _ -> Const false
+        let checkAll = Seq.filter (flip checkConcreteLength s) >> Seq.isEmpty >> not
+        Seq.init (s.Length/2) ((+) 1)
+        |> checkAll
 
     let invalidIds check (l:int64,h:int64) =
-        Seq.init (int (h-l+1L)) (fun i -> l + int64 i)
+        Seq.init (h-l+1L |> int) (int64 >> ((+) l) >> string)
         |> Seq.filter check
 
-    let sumInvalidIds invalidCheck = Seq.map (invalidIds invalidCheck) >> Seq.collect id >> Seq.sum
+    let sumInvalidIds invalidCheck = Seq.map (invalidIds invalidCheck) >> Seq.collect id >> Seq.sumBy int64
 
     let private part1 = sumInvalidIds isInvalid_p1
 

@@ -20,3 +20,8 @@ module Misc =
         let l = lo + sh
         let h = hi + sh
         h/n - (l-1)/n
+
+    let Const a _ = a
+
+    let (|Even|Odd|) n = if n % 2 = 0 then Even n else Odd n
+    let (|DivisibleBy|_|) x n = if n % x = 0 then  Some(n) else None

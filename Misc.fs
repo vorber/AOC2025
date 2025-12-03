@@ -11,6 +11,7 @@ module Misc =
     let both f g x = (f x, g x)
     let flip f a b = f b a
     let tmap f (a,b) = (f a, f b)
+    let tmap2 f g (a, b) = (f a, g b)
 
     let uncurry f (a, b) = f a b
     let curry f a b = f (a, b)

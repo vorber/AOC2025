@@ -40,7 +40,7 @@ module Day4 =
 
     let findNeighbors ps p = neighbors |> Seq.map (move p) |> Seq.filter (flip Set.contains ps)
 
-    let step (prev: Set<int*(int*int)>) =
+    let step prev =
         let (removed,remaining) = prev |> Set.partition (fst >> (>) 4) |> tmap2 (Set.map snd) id
         let remainingPositions = remaining |> Set.map snd
         let effectMap = removed |> Set.toSeq |> Seq.collect (findNeighbors remainingPositions) |> Seq.countBy id |> Map

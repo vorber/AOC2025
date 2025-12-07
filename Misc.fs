@@ -32,5 +32,7 @@ module Misc =
 
     let Const a _ = a
 
+    let (<&>) f g x = f x && g x
+
     let (|Even|Odd|) n = if n % 2 = 0 then Even n else Odd n
     let (|DivisibleBy|_|) x n = if n % x = 0 then  Some(n) else None

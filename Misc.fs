@@ -2,10 +2,17 @@ namespace AOC
 
 module Misc =
     open System.Collections.Generic
+    open System.Diagnostics
+
     let print msg x =
         printfn msg x
         x
     let output (p1,p2) = sprintf "(p1:%A, p2:%A)" p1 p2
+    let timed f a =
+        let timer = Stopwatch.StartNew()
+        let result = f a
+        result, (sprintf "%i ms" timer.ElapsedMilliseconds)
+
     let charToInt (c:char) = int c - int '0'
 
     let tuple (arr:IList<'a>) = (arr[0], arr[1])
@@ -32,6 +39,14 @@ module Misc =
         let l = lo + sh
         let h = hi + sh
         h/n - (l-1)/n
+    
+    let combinations<'a>: 'a array -> ('a*'a) list =
+        let rec distinctPairs acc p arr =
+            let last = (Array.length arr) - 1
+            let pairs v = Array.map (curry id v) >> Array.toList
+            if p=last then acc
+            else distinctPairs (acc @ pairs arr[p] arr[p+1..]) (p+1) arr
+        distinctPairs [] 0
 
     let Const a _ = a
 
@@ -81,3 +96,20 @@ module Misc =
             |> Array.filter (uncurry (=))
             |> Array.map fst
             |> Array.map (fun i -> sizes[i])
+
+    type BoundingBox =
+        {L:int;R:int;T:int;B:int}
+        static member FromRect r = {
+            L = tmap fst r ||> min;
+            R = tmap fst r ||> max;
+            T = tmap snd r ||> min;
+            B = tmap snd r ||> max;
+        }
+        member this.intersectsInsideWith other =
+            let left = this.L >= other.R
+            let right = this.R <= other.L
+            let above = this.B <= other.T
+            let below = this.T >= other.B
+            not (left || right || above || below)
+        static member intersectsInside (a:BoundingBox) (b:BoundingBox) = a.intersectsInsideWith b
+

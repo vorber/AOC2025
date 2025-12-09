@@ -13,6 +13,7 @@ let data day =
     | 6 -> (Day6.solve, Day6.input)
     | 7 -> (Day7.solve, Day7.input)
     | 8 -> (Day8.solve, Day8.input)
+    | 9 -> (Day9.solve, Day9.input)
     | _ -> failwithf "Day %i is not there yet" day
 
 let solveinput = data >> fst

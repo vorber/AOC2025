@@ -1,24 +1,5 @@
 namespace AOC
-module Seq =
-    let Tuple2 (s: seq<'a>) =
-        s
-        |> Seq.toList
-        |> function
-            | fst :: snd :: _ -> (fst, snd)
-            | _ -> failwith "oops"
 
-    let Tuple3 (s: seq<'a>) =
-        s
-        |> Seq.toList
-        |> function
-            | fst :: snd :: trd :: _ -> (fst, snd, trd)
-            | _ -> failwith "oops"
-
-    let heads<'a>: 'a seq -> 'a seq = Seq.rev >> Seq.tail >> Seq.rev
-
-    let Tuple = Tuple2
-
-    let product: int seq -> int = Seq.fold (fun a c -> a * c) 1
 module Day8 =
     open Misc
 

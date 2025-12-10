@@ -18,10 +18,13 @@
     <Compile Include="day7.fs" />
     <Compile Include="day8.fs" />
     <Compile Include="day9.fs" />
+    <Compile Include="day10.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="9.0.300" />
     <PackageReference Include="FParsec" Version="1.1.1" />
     <PackageReference Include="System.CommandLine" Version="2.0.0" />
+    <PackageReference Include="FLips" Version="2.4.10" />
   </ItemGroup>
 </Project>

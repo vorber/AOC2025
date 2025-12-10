@@ -1,5 +1,4 @@
-﻿// For more information see https://aka.ms/fsharp-console-apps
-open System.CommandLine
+﻿open System.CommandLine
 open AOC
 open AOC.Misc
 
@@ -14,6 +13,7 @@ let data day =
     | 7 -> (Day7.solve, Day7.input)
     | 8 -> (Day8.solve, Day8.input)
     | 9 -> (Day9.solve, Day9.input)
+    | 10 -> (Day10.solve, Day10.input)
     | _ -> failwithf "Day %i is not there yet" day
 
 let solveinput = data >> fst

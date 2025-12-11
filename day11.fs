@@ -41,12 +41,11 @@ module Day11 =
     type G = Graph<string>
     let private countPaths src dst (graph:G) sorted =
         let rec walk pc vs =
-            let addPaths count values key = values |> Map.change key (fun p -> Some (count + Option.defaultValue 0L p)) 
+            let addPaths count key = Map.change key (Option.defaultValue 0L >> ((+) count) >> Option.Some) 
             match vs with
             | [] -> pc
             | v::t ->
-                let pathCount = pc |> Map.find v
-                let pc' = graph.OutgoingEdges[v].Keys |> Seq.fold (addPaths pathCount) pc
+                let pc' = graph.OutgoingEdges[v].Keys |> Seq.fold (pc |> Map.find v |> addPaths |> flip) pc
                 walk pc' t
         let initialPaths = graph.Vertices |> Seq.map (fun v -> if v = src then v,1L else v,0L) |> Map
         walk initialPaths sorted |> Map.find dst

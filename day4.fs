@@ -55,3 +55,4 @@ module Day4 =
 
     let solve: string seq -> string =
         parseInput >> bothParts >> output
+    let test = input |> solve

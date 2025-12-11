@@ -38,4 +38,5 @@ module Day7 =
 
     let solve: string seq -> string =
         common >> both part1 part2 >> output
+    let test = input |> solve
 

@@ -34,3 +34,4 @@ module Day6 =
 
     let solve: string seq -> string =
         both (parse_part1 >> part1) (parse_part2 >> part2) >> output
+    let test = input |> solve

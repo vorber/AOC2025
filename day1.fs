@@ -41,3 +41,4 @@ module Day1 =
 
     let solve: string seq -> string = 
         Seq.map parseItem >> both part1 part2 >> output
+    let test = input |> solve

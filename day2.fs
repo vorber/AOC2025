@@ -34,3 +34,5 @@ module Day2 =
     let solve: string seq -> string = 
         Seq.head >> splitOn "," >> Seq.map parse
         >> both part1 part2 >> output
+
+    let test = input |> solve

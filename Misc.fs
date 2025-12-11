@@ -8,6 +8,7 @@ module Misc =
         printfn msg x
         x
     let output (p1,p2) = sprintf "(p1:%A, p2:%A)" p1 p2
+    let outputTimed (((p1, t1), (p2, t2)), overall) = sprintf $"p1:%A{p1} ({t1}), p2:%A{p2} ({t2}), overall: {overall}" 
     let timed f a =
         let timer = Stopwatch.StartNew()
         let result = f a
@@ -54,6 +55,14 @@ module Misc =
 
     let (|Even|Odd|) n = if n % 2 = 0 then Even n else Odd n
     let (|DivisibleBy|_|) x n = if n % x = 0 then  Some(n) else None
+
+    
+    module Set =
+        let isNonEmptySubset s1 s2 = not (Set.isEmpty s1) && Set.isSubset s1 s2 
+        let (|Empty|NonEmpty|) s = if Set.isEmpty s then Empty else NonEmpty s
+
+    module Map =
+        let tryFind2 k1 k2 = Map.tryFind k1  >> Option.bind (Map.tryFind k2)
 
     type DisjointSet(parents: int array, ranks: int array, sizes: int array) =
         let mutable parents = parents

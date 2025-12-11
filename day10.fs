@@ -86,5 +86,6 @@ module Day10 =
         Seq.sumBy count >> int
 
     let solve: string seq -> string =
-        parse >> both part1 part2 >> output
+        parse >> both (timed part1) (timed part2) >> output
 
+    let test = input |> solve

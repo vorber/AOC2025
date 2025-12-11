@@ -33,3 +33,4 @@ module Day9 =
 
     let solve: string seq -> string =
         parse >> both (timed part1) (timed part2) >> output
+    let test = input |> solve

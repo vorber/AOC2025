@@ -36,16 +36,17 @@ module Day11 =
     let private parse =
         let parseLine = splitOn ": " >> tuple >> tmap2 id (splitOn " " >> Seq.map (both id (Const 1)))
         let makeGraph = both (Seq.map fst >> Graph.fromLabels >> Graph.addVertex "out") id >> uncurry (Seq.fold Graph.addEdges)
-        Seq.map parseLine >> makeGraph >> both id (fun g -> g.topologicalSort)
+        Seq.map parseLine >> makeGraph >> both id _.topologicalSort
 
     type G = Graph<string>
     let private countPaths src dst (graph:G) sorted =
         let rec walk pc vs =
-            let incrementby by values key = values |> Map.change key (fun p -> Some (by + Option.defaultValue 0L p)) 
+            let addPaths count values key = values |> Map.change key (fun p -> Some (count + Option.defaultValue 0L p)) 
             match vs with
             | [] -> pc
             | v::t ->
-                let pc' = graph.OutgoingEdges[v].Keys |> Seq.fold (pc |> Map.find v |> incrementby) pc
+                let pathCount = pc |> Map.find v
+                let pc' = graph.OutgoingEdges[v].Keys |> Seq.fold (addPaths pathCount) pc
                 walk pc' t
         let initialPaths = graph.Vertices |> Seq.map (fun v -> if v = src then v,1L else v,0L) |> Map
         walk initialPaths sorted |> Map.find dst

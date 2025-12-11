@@ -38,15 +38,14 @@ module Day11 =
         let makeGraph = both (Seq.map fst >> Graph.fromLabels >> Graph.addVertex "out") id >> uncurry (Seq.fold Graph.addEdges)
         Seq.map parseLine >> makeGraph >> both id (fun g -> g.topologicalSort)
 
-    type PathCounts = Map<string, int64>
     type G = Graph<string>
     let private countPaths src dst (graph:G) sorted =
-        let rec walk (pc: PathCounts) vs =
-            let incrementby by (values: PathCounts) key = values |> Map.change key (fun p -> Some (by + Option.defaultValue 0L p)) 
+        let rec walk pc vs =
+            let incrementby by values key = values |> Map.change key (fun p -> Some (by + Option.defaultValue 0L p)) 
             match vs with
             | [] -> pc
             | v::t ->
-                let pc' = graph.OutgoingEdges[v].Keys |> Seq.fold (incrementby pc[v]) pc
+                let pc' = graph.OutgoingEdges[v].Keys |> Seq.fold (pc |> Map.find v |> incrementby) pc
                 walk pc' t
         let initialPaths = graph.Vertices |> Seq.map (fun v -> if v = src then v,1L else v,0L) |> Map
         walk initialPaths sorted |> Map.find dst

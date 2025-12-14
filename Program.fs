@@ -1,6 +1,5 @@
 ﻿open System.CommandLine
 open AOC
-open AOC.Misc
 
 let data day = 
     match day with
@@ -15,6 +14,7 @@ let data day =
     | 9 -> (Day9.solve, Day9.test)
     | 10 -> (Day10.solve, Day10.test)
     | 11 -> (Day11.solve, Day11.test)
+    | 12 -> (Day12.solve, Day12.test)
     | _ -> failwithf "Day %i is not there yet" day
 
 let solveinput = data >> fst
